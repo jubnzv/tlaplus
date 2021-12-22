@@ -247,7 +247,7 @@ public class SpecProcessor implements ValueConstants, ToolGlobals {
           if (opDef.getArity() == 0) {
             try {
             	Object defVal = WorkerValue.demux(opDefEvaluator, consts[i], opDef);
-                opDef.setToolObject(toolId, defVal);
+            	consts[i].setToolObject(toolId, defVal);
                 constantDefns.computeIfAbsent(mod, key -> new HashMap<OpDefOrDeclNode, Object>()).put(opDef, defVal);
             } catch (Assert.TLCRuntimeException | EvalException e) {
               final String addendum = (e instanceof EvalException) ? "" : (" - specifically: " + e.getMessage());
@@ -284,8 +284,7 @@ public class SpecProcessor implements ValueConstants, ToolGlobals {
                 }
                 // System.err.println(opName);
                 final Object val = WorkerValue.demux(opDefEvaluator, opDef);
-                // System.err.println(opName + ": " + val);
-                opDef.setToolObject(toolId, val);
+                opDefs[i].setToolObject(toolId, val);
                 Object def = this.defns.get(opName);
                 if (def == opDef) {
 					this.defns.put(opName, val);
